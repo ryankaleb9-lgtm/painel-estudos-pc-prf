@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel de Estudos — PRF | PC-AP</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+    }
+
+    header {
+      background: linear-gradient(90deg, #0a2540, #000000);
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Painel de Estudos</h1>
+    <p>PRF | PC-AP</p>
+  </header>
+
+  <main>
+    <p>Conteúdo do site aqui embaixo</p>
+  </main>
+
+</body>
+</html>
