@@ -35,6 +35,20 @@
   <main>
     <p>Conteúdo do site aqui embaixo</p>
   </main>
+<script>
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+  checkboxes.forEach((checkbox, index) => {
+    const saved = localStorage.getItem('check_' + index);
+    if (saved === 'true') {
+      checkbox.checked = true;
+    }
+
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem('check_' + index, checkbox.checked);
+    });
+  });
+</script>
 
 </body>
 </html>
