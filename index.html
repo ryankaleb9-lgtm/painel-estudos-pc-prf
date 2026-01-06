@@ -20,7 +20,7 @@ header{
   position:relative;
 }
 header h1{font-size:26px;}
-.menu-toggle{font-size:28px;cursor:pointer;}
+header span{font-size:20px;cursor:pointer;}
 
 /* Menu lateral */
 #menu{
@@ -81,12 +81,15 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
 /* Botão IA */
 .ia-btn{display:inline-block;margin-top:10px;padding:8px 12px;background:#0d47a1;color:#fff;border:none;border-radius:6px;cursor:pointer;transition:0.3s;}
 .ia-btn:hover{background:#0a2540;}
+
+/* Gráfico de desempenho */
+#graficoDesempenho{width:100%;height:300px;background:#f4f6f8;border-radius:12px;margin-top:15px;display:flex;justify-content:center;align-items:center;font-size:18px;color:#777;}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Ryan Ferreira</h1>
+  <h1>PRF | PC-AP</h1>
   <span class="menu-toggle">&#9776;</span>
 </header>
 
@@ -95,20 +98,21 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
   <span class="close-btn">&times; Fechar</span>
   <h2>Menu</h2>
   <ul>
-    <li onclick="abrirAssuntos()">Assuntos / Matérias</li>
+    <li onclick="abrirDashboard()">Dashboard</li>
     <li onclick="abrirMetas()">Metas Diárias</li>
-    <li onclick="abrirIA()">Agendamento e IA</li>
-    <li onclick="abrirDesempenho()">Desempenho Geral</li>
+    <li onclick="abrirDesempenho()">Desempenho por Disciplina</li>
+    <li onclick="abrirIA()">Agendamento Inteligente / Resumos</li>
   </ul>
 </div>
 
 <main class="container">
 
-<!-- Progresso Geral -->
-<section class="bloco">
-  <h2>📊 Progresso Geral</h2>
+<!-- Dashboard inicial -->
+<section class="bloco" id="dashboard">
+  <h2>Ryan Ferreira</h2>
+  <div id="graficoDesempenho">Gráfico de desempenho geral aqui</div>
   <div class="percentual">
-    <span>Percentual Total:</span>
+    <span>Progresso Geral:</span>
     <span id="percentGeral">0%</span>
   </div>
   <div class="barra-container">
@@ -116,34 +120,20 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
   </div>
 </section>
 
-<!-- Percentual por Disciplina -->
-<section class="bloco">
-  <h2>📚 Desempenho por Disciplina</h2>
-
-  <h3>Língua Portuguesa</h3>
-  <div class="percentual"><span>Progresso:</span><span id="percentPort">0%</span></div>
-  <div class="barra-container"><div class="barra"><div class="fill" id="barraPort"></div></div></div>
-
-  <h3>Direito Constitucional</h3>
-  <div class="percentual"><span>Progresso:</span><span id="percentConstitu">0%</span></div>
-  <div class="barra-container"><div class="barra"><div class="fill" id="barraConstitu"></div></div></div>
-
-  <h3>Direito Penal</h3>
-  <div class="percentual"><span>Progresso:</span><span id="percentPenal">0%</span></div>
-  <div class="barra-container"><div class="barra"><div class="fill" id="barraPenal"></div></div></div>
-
-  <h3>Redação</h3>
-  <div class="percentual"><span>Progresso:</span><span id="percentRedacao">0%</span></div>
-  <div class="barra-container"><div class="barra"><div class="fill" id="barraRedacao"></div></div></div>
-</section>
-
 <!-- Metas Diárias -->
-<section class="bloco" id="metas">
+<section class="bloco" id="metas" style="display:none;">
   <h2>🎯 Metas Diárias</h2>
-  <p>Segunda a Sexta, 3 horas/dia. Blocos divididos por complexidade.</p>
+  <p>Segunda a Sexta, 3 horas/dia. Blocos ajustados por complexidade do assunto.</p>
+  <div id="metasDias"></div>
 </section>
 
-<!-- Accordion Assuntos -->
+<!-- Desempenho por disciplina -->
+<section class="bloco" id="desempenho" style="display:none;">
+  <h2>📚 Desempenho por Disciplina</h2>
+  <div id="desempenhoDisciplinas"></div>
+</section>
+
+<!-- Assuntos detalhados (accordion) -->
 <section class="bloco" id="assuntos">
   <h2>📑 Assuntos Detalhados</h2>
 
@@ -155,10 +145,10 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
       <li><input type="checkbox"> Ortografia</li>
       <li><input type="checkbox"> Sintaxe</li>
       <li><input type="checkbox"> Concordância</li>
-      <li><input type="checkbox">Pontuação</li>
-      <li><input type="checkbox">Direito Constitucional: Princípios fundamentais</li>
-      <li><input type="checkbox">Direito Constitucional: Direitos e garantias</li>
-      <li><input type="checkbox">Direito Administrativo: Administração Pública</li>
+      <li><input type="checkbox"> Pontuação</li>
+      <li><input type="checkbox"> Direito Constitucional: Princípios fundamentais</li>
+      <li><input type="checkbox"> Direito Constitucional: Direitos e garantias</li>
+      <li><input type="checkbox"> Direito Administrativo: Administração Pública</li>
     </ul>
     <button class="ia-btn" onclick="gerarResumo('baseComum')">Gerar Resumo IA</button>
     <p><a href="https://www.qconcursos.com" target="_blank">Resolver Questões</a></p>
@@ -172,7 +162,7 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
       <li><input type="checkbox"> Raciocínio Lógico</li>
       <li><input type="checkbox"> Legislação de Trânsito (CTB)</li>
       <li><input type="checkbox"> Ética e Cidadania</li>
-      <li><input type="checkbox">Língua Estrangeira: Espanhol</li>
+      <li><input type="checkbox"> Língua Estrangeira: Espanhol</li>
     </ul>
     <button class="ia-btn" onclick="gerarResumo('prf')">Gerar Resumo IA</button>
     <p><a href="https://www.qconcursos.com" target="_blank">Resolver Questões</a></p>
@@ -196,16 +186,27 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
 </main>
 
 <script>
-// Menu lateral
+// Menu lateral toggle
 const menu=document.getElementById('menu');
 document.querySelector('.menu-toggle').addEventListener('click',()=>{menu.style.left='0';});
 document.querySelector('.close-btn').addEventListener('click',()=>{menu.style.left='-350px';});
 
 // Menu funções
-function abrirAssuntos(){alert("Abrir assuntos detalhados.");}
-function abrirMetas(){alert("Abrir metas diárias detalhadas.");}
-function abrirIA(){alert("Abrir agendamento inteligente e resumos de aula.");}
-function abrirDesempenho(){alert("Abrir desempenho geral com gráficos.");}
+function abrirDashboard(){document.getElementById('dashboard').style.display='block';
+document.getElementById('metas').style.display='none';
+document.getElementById('desempenho').style.display='none';}
+
+function abrirMetas(){document.getElementById('dashboard').style.display='none';
+document.getElementById('metas').style.display='block';
+document.getElementById('desempenho').style.display='none';
+carregarMetas();}
+
+function abrirDesempenho(){document.getElementById('dashboard').style.display='none';
+document.getElementById('metas').style.display='none';
+document.getElementById('desempenho').style.display='block';
+carregarDesempenho();}
+
+function abrirIA(){alert("Aqui você poderá gerenciar agendamento inteligente e gerar resumos via IA (mock).");}
 
 // Accordion
 const acc=document.getElementsByClassName("accordion");
@@ -218,7 +219,7 @@ for(let i=0;i<acc.length;i++){
   });
 }
 
-// Checkbox e barras
+// Checkbox e progresso
 const checkboxes=document.querySelectorAll('input[type="checkbox"]');
 checkboxes.forEach((cb,index)=>{
   const saved=localStorage.getItem('check_'+index);
@@ -230,14 +231,10 @@ checkboxes.forEach((cb,index)=>{
 });
 
 function atualizarBarras(){
-  const blocos=[
-    {id:"baseComum", barra:"barraPort", value:0},
-    {id:"prf", barra:"barraConstitu", value:0},
-    {id:"pcap", barra:"barraPenal", value:0},
-  ];
-  let totalFeitos=0, totalCheck=0;
-  blocos.forEach(bloco=>{
-    const lista=document.getElementById(bloco.id);
+  const blocos=["baseComum","prf","pcap"];
+  let totalFeitos=0,totalCheck=0;
+  blocos.forEach(id=>{
+    const lista=document.getElementById(id);
     const items=lista.querySelectorAll('input[type="checkbox"]');
     let feitos=0;
     items.forEach(cb=>{if(cb.checked) feitos++;});
@@ -252,6 +249,39 @@ function atualizarBarras(){
 // Mock IA
 function gerarResumo(assunto){
   alert("Resumo IA gerado para: "+assunto+"\n(Exemplo de IA, integração futura com GPT/API)");
+}
+
+// Mock metas diárias
+function carregarMetas(){
+  const metasDiv=document.getElementById('metasDias');
+  metasDiv.innerHTML="";
+  const dias=["Segunda","Terça","Quarta","Quinta","Sexta"];
+  const materias=["Língua Portuguesa","Direito Constitucional","Direito Administrativo","Direito Penal","Direito Processual Penal","Física","Raciocínio Lógico","História do Amapá"];
+  dias.forEach(d=>{
+    let bloco=document.createElement('div');
+    bloco.className="meta-dia";
+    bloco.innerHTML=`<h4>${d}</h4>`;
+    let ul=document.createElement('ul');
+    materias.forEach(m=>{
+      let li=document.createElement('li');
+      li.innerHTML=`${m}: 30min estudo / 1h questão / 1h revisão <input type="checkbox">`;
+      ul.appendChild(li);
+    });
+    bloco.appendChild(ul);
+    metasDiv.appendChild(bloco);
+  });
+}
+
+// Mock desempenho detalhado
+function carregarDesempenho(){
+  const div=document.getElementById('desempenhoDisciplinas');
+  div.innerHTML="";
+  const disciplinas=["Compreensão e interpretação de textos","Ortografia","Sintaxe","Concordância","Pontuação","Direito Constitucional","Direito Administrativo","Direito Penal","Direito Processual Penal","Física","Raciocínio Lógico","História do Amapá","Geografia do Amapá","Atualidades","Legislação de Trânsito","Ética e Cidadania","Língua Estrangeira"];
+  disciplinas.forEach(d=>{
+    let bloco=document.createElement('div');
+    bloco.innerHTML=`<strong>${d}</strong> - Progresso: <input type="checkbox" disabled>`;
+    div.appendChild(bloco);
+  });
 }
 
 // Atualiza progresso inicial
