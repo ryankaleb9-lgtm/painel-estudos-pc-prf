@@ -2,38 +2,33 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Painel de Estudos — Ryan Ferreira</title>
+<title>Painel de Estudos — PRF / PC-AP</title>
 <style>
 /* Reset básico */
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Arial',sans-serif;background:#fff;color:#111;min-height:100vh;}
+body{font-family:'Arial',sans-serif;background:#f5f5f5;color:#111;min-height:100vh;}
 
-/* Header topo */
+/* Barra superior pequena */
 header{
-  background:#0d47a1;color:#fff;padding:15px 30px;
-  display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  background:#ccc;color:#111;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);
 }
-header h1{font-size:26px;}
-header nav a{color:#fff;text-decoration:none;margin:0 12px;font-weight:bold;cursor:pointer;}
-header nav a:hover{text-decoration:underline;}
+header .menu-toggle{cursor:pointer;width:25px;height:18px;display:flex;flex-direction:column;justify-content:space-between;}
+header .menu-toggle span{display:block;height:3px;background:#888;border-radius:2px;}
+header nav a{margin-left:15px;text-decoration:none;font-weight:bold;color:#111;cursor:pointer;}
+header nav a:hover{color:#0d47a1;}
 
 /* Menu lateral */
 #menu{
-  position:fixed;top:0;left:-300px;width:300px;height:100%;background:#000;color:#fff;
-  padding:25px 20px;overflow-y:auto;transition:0.3s;z-index:1000;
+  position:fixed;top:0;left:-300px;width:300px;height:100%;background:#333;color:#fff;padding:25px 20px;overflow-y:auto;transition:0.3s;z-index:1000;
 }
 #menu h2{color:#0d47a1;margin-bottom:15px;}
 #menu .close-btn{cursor:pointer;font-size:22px;margin-bottom:20px;display:block;}
 #menu ul{list-style:none;padding:0;}
-#menu ul li{padding:10px 0;border-bottom:1px solid #333;cursor:pointer;font-weight:bold;}
+#menu ul li{padding:10px 0;border-bottom:1px solid #555;cursor:pointer;font-weight:bold;}
 #menu ul li:hover{color:#0d47a1;}
 
-/* Menu toggle (três listras) */
-.menu-toggle{cursor:pointer;font-size:22px;display:flex;flex-direction:column;justify-content:space-between;width:25px;height:18px;}
-.menu-toggle span{display:block;height:3px;background:#888;border-radius:2px;}
-
 /* Container principal */
-.container{max-width:1200px;margin:30px auto;padding:0 20px;}
+.container{max-width:1200px;margin:20px auto;padding:0 20px;}
 
 /* Barras de abas */
 .abas{display:flex;justify-content:flex-start;margin-bottom:20px;}
@@ -49,7 +44,7 @@ header nav a:hover{text-decoration:underline;}
 
 /* Listas e checkboxes */
 .lista{list-style:none;padding-left:0;margin-bottom:10px;}
-.lista li{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #eee;font-size:16px;}
+.lista li{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid #eee;font-size:16px;justify-content:space-between;}
 .lista li:last-child{border-bottom:none;}
 input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;accent-color:#0d47a1;}
 
@@ -64,8 +59,8 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
 .accordion:hover{background:#e0e4e8;}
 .panel{padding:0 12px;display:none;background:#fff;overflow:hidden;margin-bottom:8px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
 
-/* Botão IA */
-.ia-btn{display:inline-block;margin-top:10px;padding:8px 12px;background:#0d47a1;color:#fff;border:none;border-radius:6px;cursor:pointer;transition:0.3s;}
+/* Botões IA */
+.ia-btn{display:inline-block;margin-left:5px;padding:5px 8px;background:#0d47a1;color:#fff;border:none;border-radius:6px;cursor:pointer;transition:0.3s;font-size:13px;}
 .ia-btn:hover{background:#0a2540;}
 
 /* Aba conteúdo */
@@ -76,10 +71,17 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
 <body>
 
 <header>
-  <h1>Painel de Estudos — Ryan Ferreira</h1>
   <div class="menu-toggle">
-    <span></span><span></span><span></span>
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
+  <nav>
+    <a onclick="abrirAba('hoje')">Hoje</a>
+    <a onclick="abrirAba('assuntos')">Assuntos</a>
+    <a onclick="abrirAba('revisao')">Revisão</a>
+    <a onclick="abrirAba('questoes')">Questões</a>
+  </nav>
 </header>
 
 <!-- Menu lateral -->
@@ -87,22 +89,15 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
   <span class="close-btn">&times; Fechar</span>
   <h2>Menu</h2>
   <ul>
-    <li onclick="abrirDashboard()">Dashboard</li>
-    <li onclick="abrirMetas()">Metas Diárias</li>
-    <li onclick="abrirDesempenho()">Desempenho por Disciplina</li>
-    <li onclick="abrirIA()">IA — Resumos / Questões / Mapas</li>
+    <li onclick="abrirAba('hoje')">Dashboard Hoje</li>
+    <li onclick="abrirAba('assuntos')">Assuntos Detalhados</li>
+    <li onclick="abrirAba('revisao')">Revisão</li>
+    <li onclick="abrirAba('questoes')">Questões</li>
+    <li onclick="abrirIA()">IA — Resumos/Mapas/Questões</li>
   </ul>
 </div>
 
 <main class="container">
-
-  <!-- Barras de abas Hoje / Assuntos / Revisão / Questões -->
-  <div class="abas">
-    <button class="aba-btn active" onclick="abrirAba('hoje')">Hoje</button>
-    <button class="aba-btn" onclick="abrirAba('assuntos')">Assuntos</button>
-    <button class="aba-btn" onclick="abrirAba('revisao')">Revisão</button>
-    <button class="aba-btn" onclick="abrirAba('questoes')">Questões</button>
-  </div>
 
   <!-- ABA Hoje -->
   <div class="aba active" id="hoje">
@@ -125,21 +120,50 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
   <!-- ABA Assuntos -->
   <div class="aba" id="assuntos">
     <div class="bloco">
-      <h2>📑 Assuntos Detalhados</h2>
+      <h2>📑 Assuntos Detalhados PRF e PC-AP</h2>
 
-      <!-- Accordion exemplo Base Comum -->
-      <button class="accordion">Base Comum PRF + PC-AP</button>
+      <!-- Accordion -->
+      <button class="accordion">Língua Portuguesa</button>
       <div class="panel">
-        <ul class="lista" id="baseComum">
-          <li><input type="checkbox"> Compreensão e interpretação de textos <button class="ia-btn" onclick="gerarResumo('Compreensão e interpretação de textos')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Compreensão e interpretação de textos')">Mapa Mental</button></li>
-          <li><input type="checkbox"> Ortografia <button class="ia-btn" onclick="gerarResumo('Ortografia')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Ortografia')">Mapa Mental</button></li>
-          <li><input type="checkbox"> Sintaxe <button class="ia-btn" onclick="gerarResumo('Sintaxe')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Sintaxe')">Mapa Mental</button></li>
-          <li><input type="checkbox"> Concordância <button class="ia-btn" onclick="gerarResumo('Concordância')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Concordância')">Mapa Mental</button></li>
-          <li><input type="checkbox"> Pontuação <button class="ia-btn" onclick="gerarResumo('Pontuação')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Pontuação')">Mapa Mental</button></li>
+        <ul class="lista" id="portugues">
+          <li>Ortografia <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Ortografia')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Ortografia')">Mapa</button></li>
+          <li>Sintaxe <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Sintaxe')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Sintaxe')">Mapa</button></li>
+          <li>Concordância <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Concordância')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Concordância')">Mapa</button></li>
+          <li>Pontuação <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Pontuação')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Pontuação')">Mapa</button></li>
+          <li>Interpretação de textos <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Interpretação de textos')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Interpretação de textos')">Mapa</button></li>
+          <li>Figuras de linguagem <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Figuras de linguagem')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Figuras de linguagem')">Mapa</button></li>
+          <li>Semântica <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Semântica')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Semântica')">Mapa</button></li>
+          <li>Coesão e coerência <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Coesão e coerência')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Coesão e coerência')">Mapa</button></li>
+          <li>Redação oficial <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Redação oficial')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Redação oficial')">Mapa</button></li>
         </ul>
       </div>
 
-      <!-- Outros accordion PRF, PC-AP, Específicos podem ser adicionados aqui -->
+      <!-- Accordion Direito Constitucional -->
+      <button class="accordion">Direito Constitucional</button>
+      <div class="panel">
+        <ul class="lista" id="dirConst">
+          <li>Princípios fundamentais <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Princípios fundamentais')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Princípios fundamentais')">Mapa</button></li>
+          <li>Direitos e garantias <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Direitos e garantias')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Direitos e garantias')">Mapa</button></li>
+          <li>Organização do Estado <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Organização do Estado')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Organização do Estado')">Mapa</button></li>
+          <li>Poderes da União <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Poderes da União')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Poderes da União')">Mapa</button></li>
+          <li>Controle de constitucionalidade <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Controle de constitucionalidade')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Controle de constitucionalidade')">Mapa</button></li>
+        </ul>
+      </div>
+
+      <!-- Accordion Direito Administrativo -->
+      <button class="accordion">Direito Administrativo</button>
+      <div class="panel">
+        <ul class="lista" id="dirAdm">
+          <li>Administração Pública <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Administração Pública')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Administração Pública')">Mapa</button></li>
+          <li>Licitações e contratos <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Licitações e contratos')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Licitações e contratos')">Mapa</button></li>
+          <li>Servidores públicos <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Servidores públicos')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Servidores públicos')">Mapa</button></li>
+          <li>Atos administrativos <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Atos administrativos')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Atos administrativos')">Mapa</button></li>
+          <li>Responsabilidade civil do Estado <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Responsabilidade civil do Estado')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Responsabilidade civil do Estado')">Mapa</button></li>
+        </ul>
+      </div>
+
+      <!-- Você repetiria este padrão para todas as disciplinas PRF e PC-AP -->
+      <!-- Incluindo Direito Penal, Processual Penal, Física, Raciocínio, Informática, Atualidades, História e Geografia do Amapá, Legislação Estadual, Língua Estrangeira -->
     </div>
   </div>
 
@@ -147,7 +171,7 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
   <div class="aba" id="revisao">
     <div class="bloco">
       <h2>🔄 Revisão Programada</h2>
-      <p>Revisões entre 10, 15 e 30 dias.</p>
+      <p>Revisões programadas entre 10, 15 e 30 dias</p>
       <ul class="lista" id="revisoes">
         <!-- JS preenche automaticamente -->
       </ul>
@@ -157,15 +181,10 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
   <!-- ABA Questões -->
   <div class="aba" id="questoes">
     <div class="bloco">
-      <h2>Questões por Assunto (links filtrados)</h2>
-      <h3>📘 Português</h3>
-      <ul class="lista">
-        <li>Ortografia (FCC) — <a href="SEU_LINK_DE_FILTRO_AQUI" target="_blank">Abrir</a></li>
-        <li>Ortografia (CESP) — <a href="SEU_LINK_DE_FILTRO_AQUI" target="_blank">Abrir</a></li>
-        <li>Compreensão e interpretação de textos (FCC) — <a href="SEU_LINK_DE_FILTRO_AQUI" target="_blank">Abrir</a></li>
-        <li>Compreensão e interpretação de textos (CESP) — <a href="SEU_LINK_DE_FILTRO_AQUI" target="_blank">Abrir</a></li>
+      <h2>📌 Questões por Assunto (PRF & PC-AP)</h2>
+      <ul class="lista" id="questoesLista">
+        <!-- JS preenche automaticamente com placeholders -->
       </ul>
-      <!-- Continue com todas as disciplinas e assuntos específicos -->
     </div>
   </div>
 
@@ -182,7 +201,7 @@ function abrirAba(id){
   document.querySelectorAll('.aba').forEach(a=>a.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.aba-btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
+  if(event.target) event.target.classList.add('active');
 }
 
 // Accordion
@@ -195,9 +214,55 @@ for(let i=0;i<acc.length;i++){
   });
 }
 
-// Checkboxes e progresso
-const checkboxes=document.querySelectorAll('input[type="checkbox"]');
-checkboxes.forEach((cb,index)=>{
+// IA mock
+function gerarResumo(assunto){alert("Resumo gerado para: "+assunto);}
+function gerarMapa(assunto){alert("Mapa mental gerado para: "+assunto);}
+function abrirIA(){alert("IA — futuramente: resumos, mapas mentais, questões");}
+
+// Meta do dia
+const materias=["Língua Portuguesa","Raciocínio Lógico","Informática","Direito Constitucional","Direito Administrativo","Direito Penal","Direito Processual Penal","Legislação Especial","Física","Língua Estrangeira","Atualidades","História do Amapá","Geografia do Amapá","PC-AP específicos"];
+const metaHoje=document.getElementById('metaDiaHoje');
+materias.forEach(m=>{
+  let li=document.createElement('li');
+  li.innerHTML=`${m}: 30min estudo / 1h questão / 1h revisão <input type="checkbox">`;
+  metaHoje.appendChild(li);
+});
+
+// Revisões
+const revisoesDiv=document.getElementById('revisoes');
+materias.forEach(m=>{
+  let li=document.createElement('li');
+  li.innerHTML=`Revisão de ${m} — 10 / 15 / 30 dias <input type="checkbox">`;
+  revisoesDiv.appendChild(li);
+});
+
+// Questões placeholders
+const questoesDiv=document.getElementById('questoesLista');
+materias.forEach(m=>{
+  let li=document.createElement('li');
+  li.innerHTML=`${m} — <a href="#" target="_blank">Abrir questões FCC</a> | <a href="#" target="_blank">Abrir questões CESP</a>`;
+  questoesDiv.appendChild(li);
+});
+
+// Atualiza progresso
+function atualizarBarras(){
+  const blocos=["portugues","dirConst","dirAdm"];
+  let totalFeitos=0,totalCheck=0;
+  blocos.forEach(id=>{
+    const lista=document.getElementById(id);
+    if(lista){
+      const items=lista.querySelectorAll('input[type="checkbox"]');
+      items.forEach(cb=>{if(cb.checked) totalFeitos++;});
+      totalCheck+=items.length;
+    }
+  });
+  const geralPercent=(totalFeitos/totalCheck*100).toFixed(1);
+  document.getElementById("barraHoje").style.width=geralPercent+'%';
+  document.getElementById("percentHoje").innerText=geralPercent+'%';
+}
+
+// Salvar progresso localStorage
+document.querySelectorAll('input[type="checkbox"]').forEach((cb,index)=>{
   const saved=localStorage.getItem('check_'+index);
   if(saved==='true') cb.checked=true;
   cb.addEventListener('change',()=>{
@@ -206,48 +271,7 @@ checkboxes.forEach((cb,index)=>{
   });
 });
 
-function atualizarBarras(){
-  const blocos=["baseComum"];
-  let totalFeitos=0,totalCheck=0;
-  blocos.forEach(id=>{
-    const lista=document.getElementById(id);
-    const items=lista.querySelectorAll('input[type="checkbox"]');
-    let feitos=0;
-    items.forEach(cb=>{if(cb.checked) feitos++;});
-    totalCheck+=items.length;
-    totalFeitos+=feitos;
-  });
-  const geralPercent=(totalFeitos/totalCheck*100).toFixed(1);
-  document.getElementById("barraHoje").style.width=geralPercent+'%';
-  document.getElementById("percentHoje").innerText=geralPercent+'%';
-}
-
-// Mock IA funções
-function gerarResumo(assunto){
-  alert("Resumo IA gerado para: "+assunto+"\n(Exemplo de IA, futuramente integra GPT/API)");
-}
-function gerarMapa(assunto){
-  alert("Mapa mental gerado para: "+assunto+"\n(Exemplo de IA, futuramente integra GPT/API)");
-}
-
-// Mock metas diárias
-const materias=["Língua Portuguesa","Direito Constitucional","Direito Administrativo","Direito Penal","Direito Processual Penal","Física","Raciocínio Lógico","História do Amapá"];
-const metaHoje=document.getElementById('metaDiaHoje');
-materias.forEach(m=>{
-  let li=document.createElement('li');
-  li.innerHTML=`${m}: 30min estudo / 1h questão / 1h revisão <input type="checkbox">`;
-  metaHoje.appendChild(li);
-});
-
-// Mock revisões
-const revisoesDiv=document.getElementById('revisoes');
-materias.forEach(m=>{
-  let li=document.createElement('li');
-  li.innerHTML=`Revisão de ${m} — 10 / 15 / 30 dias <input type="checkbox">`;
-  revisoesDiv.appendChild(li);
-});
-
-// Atualiza progresso inicial
+// Inicializa progresso
 atualizarBarras();
 </script>
 
