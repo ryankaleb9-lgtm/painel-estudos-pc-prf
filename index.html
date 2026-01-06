@@ -1,264 +1,179 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Painel de Estudos — PRF | PC-AP</title>
-  <style>
-    /* --- Reset básico --- */
-    * {margin:0; padding:0; box-sizing:border-box;}
-    body {font-family: 'Arial', sans-serif; background: linear-gradient(135deg,#f5f7fa,#e3ebf7); color:#111; min-height:100vh;}
+<meta charset="UTF-8">
+<title>Painel de Estudos — Ryan Ferreira</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Arial',sans-serif;background:linear-gradient(135deg,#f5f7fa,#e3ebf7);color:#111;min-height:100vh;transition:0.3s;}
+h1,h2,h3,h4{margin-bottom:10px;}
 
-    /* --- Header --- */
-    header {
-      background: linear-gradient(90deg, #0a2540, #0d47a1);
-      color: #fff;
-      padding: 25px 20px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-    header h1 {font-size: 28px;}
-    header p {margin-top:5px; opacity:0.8;}
+/* Header */
+header{
+  background:linear-gradient(90deg,#0a2540,#0d47a1);
+  color:#fff;
+  padding:20px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  position:relative;
+}
+header h1{font-size:26px;}
+.menu-toggle{font-size:28px;cursor:pointer;}
 
-    /* --- Container --- */
-    .container {max-width: 1100px; margin: 30px auto; padding: 0 15px;}
+/* Menu lateral */
+#menu{
+  position:fixed;
+  top:0;
+  left:-350px;
+  width:350px;
+  height:100%;
+  background:#fff;
+  box-shadow:5px 0 20px rgba(0,0,0,0.25);
+  padding:25px 20px;
+  overflow-y:auto;
+  transition:0.3s;
+  z-index:1000;
+}
+#menu h2{color:#0d47a1;margin-bottom:15px;}
+#menu .close-btn{cursor:pointer;font-size:22px;margin-bottom:20px;display:block;}
+#menu ul{list-style:none;padding:0;}
+#menu ul li{padding:10px 0;border-bottom:1px solid #eee;cursor:pointer;font-weight:bold;}
+#menu ul li:hover{color:#0d47a1;}
 
-    /* --- Blocos --- */
-    .bloco {
-      background:#fff;
-      border-radius:12px;
-      padding:25px;
-      margin-bottom:25px;
-      box-shadow:0 8px 20px rgba(0,0,0,0.1);
-      transition:0.3s;
-    }
-    .bloco:hover {transform:translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.15);}
-    .bloco h2 {color:#0d47a1; margin-bottom:15px;}
+/* Container */
+.container{max-width:1200px;margin:30px auto;padding:0 20px;}
 
-    /* --- Listas --- */
-    .lista {list-style:none; padding:0;}
-    .lista li {
-      display:flex;
-      align-items:center;
-      padding:8px 0;
-      border-bottom:1px solid #eee;
-      font-size:16px;
-    }
-    .lista li:last-child {border-bottom:none;}
-    input[type="checkbox"] {
-      width:20px;
-      height:20px;
-      margin-right:10px;
-      cursor:pointer;
-      accent-color:#0d47a1;
-    }
+/* Blocos */
+.bloco{
+  background:#fff;
+  border-radius:12px;
+  padding:25px;
+  margin-bottom:30px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  transition:0.3s;
+}
+.bloco:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(0,0,0,0.12);}
+.bloco h2{color:#0d47a1;margin-bottom:15px;}
 
-    /* --- Barras de progresso --- */
-    .barra-container {margin-top:10px;}
-    .barra {
-      background:#eee;
-      border-radius:10px;
-      height:14px;
-      overflow:hidden;
-      margin-top:5px;
-    }
-    .fill {
-      height:14px;
-      background:#0d47a1;
-      border-radius:10px;
-      width:0%;
-      transition:0.5s;
-    }
+/* Listas e checkboxes */
+.lista{list-style:none;padding-left:0;margin-bottom:10px;}
+.lista li{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #eee;font-size:16px;}
+.lista li:last-child{border-bottom:none;}
+input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;accent-color:#0d47a1;}
 
-    /* --- Percentuais --- */
-    .percentual {display:flex; justify-content:space-between; font-weight:bold; margin-top:10px;}
-  </style>
+/* Barras de progresso */
+.barra-container{margin-top:10px;}
+.barra{background:#eee;border-radius:12px;height:16px;overflow:hidden;margin-top:5px;}
+.fill{height:16px;background:#0d47a1;border-radius:12px;width:0%;transition:0.5s;}
+.percentual{display:flex;justify-content:space-between;font-weight:bold;margin-top:10px;font-size:16px;}
+
+/* Accordion */
+.accordion{background:#f4f6f8;cursor:pointer;padding:12px;border:none;outline:none;transition:0.3s;margin-top:8px;border-radius:6px;font-weight:bold;}
+.accordion:hover{background:#e0e4e8;}
+.panel{padding:0 12px;display:none;background:#fff;overflow:hidden;margin-bottom:8px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+
+/* Cronograma metas diárias */
+.meta-dia{margin-top:15px;}
+.meta-dia h4{margin-bottom:6px;}
+.meta-dia ul{list-style:none;padding-left:0;}
+.meta-dia li{padding:5px 0;font-size:15px;}
+
+/* Botão IA */
+.ia-btn{display:inline-block;margin-top:10px;padding:8px 12px;background:#0d47a1;color:#fff;border:none;border-radius:6px;cursor:pointer;transition:0.3s;}
+.ia-btn:hover{background:#0a2540;}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Painel de Estudos — PRF | PC-AP</h1>
-    <p>Base Comum, Específicos e Redação</p>
-  </header>
 
-  <main class="container">
+<header>
+  <h1>Ryan Ferreira</h1>
+  <span class="menu-toggle">&#9776;</span>
+</header>
 
-    <!-- BASE COMUM -->
-    <section class="bloco">
-      <h2>📘 Base Comum (PRF + PC-AP)</h2>
+<!-- Menu lateral -->
+<div id="menu">
+  <span class="close-btn">&times; Fechar</span>
+  <h2>Menu</h2>
+  <ul>
+    <li onclick="abrirAssuntos()">Assuntos / Matérias</li>
+    <li onclick="abrirMetas()">Metas Diárias</li>
+    <li onclick="abrirIA()">IA de Estudos</li>
+    <li onclick="editarHorario()">Editar Horário</li>
+  </ul>
+</div>
 
-      <!-- Percentual geral -->
-      <div class="percentual">
-        <span>Percentual Geral:</span>
-        <span id="percentGeralBase">0%</span>
-      </div>
+<main class="container">
 
-      <!-- Língua Portuguesa -->
-      <h3>📚 Língua Portuguesa</h3>
-      <ul class="lista" id="portugues">
-        <li><input type="checkbox"> Compreensão e interpretação de textos</li>
-        <li><input type="checkbox"> Ortografia oficial</li>
-        <li><input type="checkbox"> Acentuação</li>
-        <li><input type="checkbox"> Pontuação</li>
-        <li><input type="checkbox"> Classes de palavras</li>
-        <li><input type="checkbox"> Sintaxe e análise sintática</li>
-        <li><input type="checkbox"> Concordância verbal e nominal</li>
-        <li><input type="checkbox"> Regência verbal e nominal</li>
-        <li><input type="checkbox"> Coesão e coerência textual</li>
-        <li><input type="checkbox"> Figuras de linguagem</li>
-      </ul>
-      <div class="barra-container">
-        <div class="barra"><div class="fill" id="barraPortugues"></div></div>
-      </div>
+<!-- Progresso Geral -->
+<section class="bloco">
+  <h2>📊 Progresso Geral</h2>
+  <div class="percentual">
+    <span>Percentual Total:</span>
+    <span id="percentGeral">0%</span>
+  </div>
+  <div class="barra-container">
+    <div class="barra"><div class="fill" id="barraGeral"></div></div>
+  </div>
+</section>
 
-      <!-- Informática -->
-      <h3>💻 Informática</h3>
-      <ul class="lista" id="informatica">
-        <li><input type="checkbox"> Conceitos básicos de hardware e software</li>
-        <li><input type="checkbox"> Pacote Office (Word, Excel, PowerPoint)</li>
-        <li><input type="checkbox"> Internet e redes sociais</li>
-        <li><input type="checkbox"> Segurança da informação</li>
-        <li><input type="checkbox"> Sistemas operacionais</li>
-      </ul>
-      <div class="barra-container">
-        <div class="barra"><div class="fill" id="barraInformatica"></div></div>
-      </div>
+<!-- Percentual por Disciplina -->
+<section class="bloco">
+  <h2>📚 Desempenho por Disciplina</h2>
 
-      <!-- Direito Constitucional -->
-      <h3>⚖️ Direito Constitucional</h3>
-      <ul class="lista" id="constitu">
-        <li><input type="checkbox"> Princípios fundamentais</li>
-        <li><input type="checkbox"> Direitos e garantias fundamentais</li>
-        <li><input type="checkbox"> Organização do Estado</li>
-        <li><input type="checkbox"> Poderes da República</li>
-        <li><input type="checkbox"> Controle de constitucionalidade</li>
-      </ul>
-      <div class="barra-container">
-        <div class="barra"><div class="fill" id="barraConstitu"></div></div>
-      </div>
+  <h3>Língua Portuguesa</h3>
+  <div class="percentual"><span>Progresso:</span><span id="percentPort">0%</span></div>
+  <div class="barra-container"><div class="barra"><div class="fill" id="barraPort"></div></div></div>
 
-      <!-- Direito Administrativo -->
-      <h3>⚖️ Direito Administrativo</h3>
-      <ul class="lista" id="adm">
-        <li><input type="checkbox"> Administração Pública</li>
-        <li><input type="checkbox"> Atos administrativos</li>
-        <li><input type="checkbox"> Licitações e contratos</li>
-        <li><input type="checkbox"> Responsabilidade civil do Estado</li>
-        <li><input type="checkbox"> Servidores públicos</li>
-      </ul>
-      <div class="barra-container">
-        <div class="barra"><div class="fill" id="barraAdm"></div></div>
-      </div>
+  <h3>Direito Constitucional</h3>
+  <div class="percentual"><span>Progresso:</span><span id="percentConstitu">0%</span></div>
+  <div class="barra-container"><div class="barra"><div class="fill" id="barraConstitu"></div></div></div>
 
-      <!-- Direito Penal -->
-      <h3>⚖️ Direito Penal</h3>
-      <ul class="lista" id="penal">
-        <li><input type="checkbox"> Crimes contra a pessoa</li>
-        <li><input type="checkbox"> Crimes contra o patrimônio</li>
-        <li><input type="checkbox"> Crimes contra a administração pública</li>
-        <li><input type="checkbox"> Teoria do crime</li>
-      </ul>
-      <div class="barra-container">
-        <div class="barra"><div class="fill" id="barraPenal"></div></div>
-      </div>
+  <h3>Direito Penal</h3>
+  <div class="percentual"><span>Progresso:</span><span id="percentPenal">0%</span></div>
+  <div class="barra-container"><div class="barra"><div class="fill" id="barraPenal"></div></div></div>
 
-      <!-- Direito Processual Penal -->
-      <h3>⚖️ Direito Processual Penal</h3>
-      <ul class="lista" id="procpenal">
-        <li><input type="checkbox"> Inquérito policial</li>
-        <li><input type="checkbox"> Ação penal</li>
-        <li><input type="checkbox"> Procedimentos e recursos</li>
-        <li><input type="checkbox"> Prisão e medidas cautelares</li>
-      </ul>
-      <div class="barra-container">
-        <div class="barra"><div class="fill" id="barraProcPenal"></div></div>
-      </div>
+  <h3>Redação</h3>
+  <div class="percentual"><span>Progresso:</span><span id="percentRedacao">0%</span></div>
+  <div class="barra-container"><div class="barra"><div class="fill" id="barraRedacao"></div></div></div>
+</section>
 
-      <!-- Redação -->
-      <h3>✍️ Redação</h3>
-      <ul class="lista" id="redacao">
-        <li><input type="checkbox"> Estrutura do texto dissertativo-argumentativo</li>
-        <li><input type="checkbox"> Coerência e coesão textual</li>
-        <li><input type="checkbox"> Tese e argumentos</li>
-        <li><input type="checkbox"> Introdução, desenvolvimento e conclusão</li>
-        <li><input type="checkbox"> Gramática e ortografia</li>
-      </ul>
-      <div class="barra-container">
-        <div class="barra"><div class="fill" id="barraRedacao"></div></div>
-      </div>
+<!-- Metas Diárias resumidas -->
+<section class="bloco" id="metas">
+  <h2>🎯 Metas Diárias</h2>
+  <p>Segunda a Sexta, 3 horas/dia. Cada bloco dividido por complexidade.</p>
+</section>
 
-    </section>
+<!-- Accordion Assuntos -->
+<section class="bloco" id="assuntos">
+  <h2>📑 Assuntos Detalhados</h2>
 
-    <!-- ESPECÍFICO PRF -->
-    <section class="bloco">
-      <h2>🚓 Específico PRF</h2>
-      <ul class="lista" id="especificoPRF">
-        <li><input type="checkbox"> Código de Trânsito Brasileiro</li>
-        <li><input type="checkbox"> Resoluções do CONTRAN</li>
-        <li><input type="checkbox"> Física aplicada</li>
-        <li><input type="checkbox"> Raciocínio Lógico-Matemático</li>
-        <li><input type="checkbox"> Ética e Cidadania</li>
-        <li><input type="checkbox"> Geopolítica</li>
-        <li><input type="checkbox"> Espanhol</li>
-        <li><input type="checkbox"> Direitos Humanos</li>
-        <li><input type="checkbox"> Legislação Especial</li>
-      </ul>
-    </section>
+  <!-- Base Comum -->
+  <button class="accordion">Língua Portuguesa</button>
+  <div class="panel">
+    <ul class="lista" id="portugues">
+      <li><input type="checkbox"> Compreensão e interpretação de textos</li>
+      <li><input type="checkbox"> Ortografia</li>
+      <li><input type="checkbox"> Sintaxe</li>
+      <li><input type="checkbox"> Concordância</li>
+      <li><input type="checkbox"> Pontuação</li>
+    </ul>
+    <button class="ia-btn" onclick="gerarResumo('portugues')">Gerar Resumo IA</button>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/lingua-portuguesa" target="_blank">Resolver Questões</a></p>
+  </div>
 
-    <!-- ESPECÍFICO PC-AP -->
-    <section class="bloco">
-      <h2>🕵️ Específico PC-AP</h2>
-      <ul class="lista" id="especificoPC">
-        <li><input type="checkbox"> História do Amapá</li>
-        <li><input type="checkbox"> Geografia do Amapá</li>
-        <li><input type="checkbox"> Atualidades</li>
-        <li><input type="checkbox"> Leis específicas do Estado do Amapá</li>
-      </ul>
-    </section>
+  <button class="accordion">Direito Constitucional</button>
+  <div class="panel">
+    <ul class="lista" id="constitu">
+      <li><input type="checkbox"> Princípios fundamentais</li>
+      <li><input type="checkbox"> Direitos e garantias fundamentais</li>
+      <li><input type="checkbox"> Organização do Estado</li>
+      <li><input type="checkbox"> Poderes da República</li>
+      <li><input type="checkbox"> Controle de constitucionalidade</li>
+    </ul>
+    <button class="ia-btn" onclick="gerarResumo('constitu')">Gerar Resumo IA</button>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-constitucional" target="_blank">Resolver Questões</a></p>
+  </div>
 
-  </main>
-
-  <script>
-    // --- Salvar checkbox ---
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach((checkbox, index) => {
-      const saved = localStorage.getItem('check_' + index);
-      if (saved === 'true') checkbox.checked = true;
-
-      checkbox.addEventListener('change', () => {
-        localStorage.setItem('check_' + index, checkbox.checked);
-        atualizarBarras();
-      });
-    });
-
-    // --- Atualizar barras de progresso ---
-    function atualizarBarras() {
-      const blocos = [
-        {id:"portugues", barra:"barraPortugues"},
-        {id:"informatica", barra:"barraInformatica"},
-        {id:"constitu", barra:"barraConstitu"},
-        {id:"adm", barra:"barraAdm"},
-        {id:"penal", barra:"barraPenal"},
-        {id:"procpenal", barra:"barraProcPenal"},
-        {id:"redacao", barra:"barraRedacao"}
-      ];
-
-      let totalCheck = 0, totalFeitos = 0;
-
-      blocos.forEach(bloco=>{
-        const lista = document.getElementById(bloco.id);
-        const items = lista.querySelectorAll('input[type="checkbox"]');
-        let feitos = 0;
-        items.forEach(cb=>{if(cb.checked) feitos++;});
-        totalCheck += items.length;
-        totalFeitos += feitos;
-        const percent = (feitos/items.length*100).toFixed(1);
-        document.getElementById(bloco.barra).style.width = percent+"%";
-      });
-
-      // Percentual geral
-      document.getElementById("percentGeralBase").innerText = ((totalFeitos/totalCheck*100).toFixed(1)) + "%";
-    }
-
-    atualizarBarras(); // inicializar
-  </script>
-</body>
-</html>
+  <button class="accordion">Di
