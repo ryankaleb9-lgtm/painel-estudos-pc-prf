@@ -5,7 +5,7 @@
 <title>Painel de Estudos — Ryan Ferreira</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Arial',sans-serif;background:linear-gradient(135deg,#f5f7fa,#e3ebf7);color:#111;min-height:100vh;transition:0.3s;}
+body{font-family:'Arial',sans-serif;background:linear-gradient(135deg,#f5f7fa,#e3ebf7);color:#111;min-height:100vh;}
 h1,h2,h3,h4{margin-bottom:10px;}
 
 /* Header */
@@ -52,9 +52,7 @@ header h1{font-size:26px;}
   padding:25px;
   margin-bottom:30px;
   box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  transition:0.3s;
 }
-.bloco:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(0,0,0,0.12);}
 .bloco h2{color:#0d47a1;margin-bottom:15px;}
 
 /* Listas e checkboxes */
@@ -99,8 +97,8 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
   <ul>
     <li onclick="abrirAssuntos()">Assuntos / Matérias</li>
     <li onclick="abrirMetas()">Metas Diárias</li>
-    <li onclick="abrirIA()">IA de Estudos</li>
-    <li onclick="editarHorario()">Editar Horário</li>
+    <li onclick="abrirIA()">Agendamento e IA</li>
+    <li onclick="abrirDesempenho()">Desempenho Geral</li>
   </ul>
 </div>
 
@@ -139,10 +137,10 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
   <div class="barra-container"><div class="barra"><div class="fill" id="barraRedacao"></div></div></div>
 </section>
 
-<!-- Metas Diárias resumidas -->
+<!-- Metas Diárias -->
 <section class="bloco" id="metas">
   <h2>🎯 Metas Diárias</h2>
-  <p>Segunda a Sexta, 3 horas/dia. Cada bloco dividido por complexidade.</p>
+  <p>Segunda a Sexta, 3 horas/dia. Blocos divididos por complexidade.</p>
 </section>
 
 <!-- Accordion Assuntos -->
@@ -150,30 +148,115 @@ input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;a
   <h2>📑 Assuntos Detalhados</h2>
 
   <!-- Base Comum -->
-  <button class="accordion">Língua Portuguesa</button>
+  <button class="accordion">Base Comum PRF + PC-AP</button>
   <div class="panel">
-    <ul class="lista" id="portugues">
+    <ul class="lista" id="baseComum">
       <li><input type="checkbox"> Compreensão e interpretação de textos</li>
       <li><input type="checkbox"> Ortografia</li>
       <li><input type="checkbox"> Sintaxe</li>
       <li><input type="checkbox"> Concordância</li>
-      <li><input type="checkbox"> Pontuação</li>
+      <li><input type="checkbox">Pontuação</li>
+      <li><input type="checkbox">Direito Constitucional: Princípios fundamentais</li>
+      <li><input type="checkbox">Direito Constitucional: Direitos e garantias</li>
+      <li><input type="checkbox">Direito Administrativo: Administração Pública</li>
     </ul>
-    <button class="ia-btn" onclick="gerarResumo('portugues')">Gerar Resumo IA</button>
-    <p><a href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/lingua-portuguesa" target="_blank">Resolver Questões</a></p>
+    <button class="ia-btn" onclick="gerarResumo('baseComum')">Gerar Resumo IA</button>
+    <p><a href="https://www.qconcursos.com" target="_blank">Resolver Questões</a></p>
   </div>
 
-  <button class="accordion">Direito Constitucional</button>
+  <!-- Específico PRF -->
+  <button class="accordion">Específico PRF</button>
   <div class="panel">
-    <ul class="lista" id="constitu">
-      <li><input type="checkbox"> Princípios fundamentais</li>
-      <li><input type="checkbox"> Direitos e garantias fundamentais</li>
-      <li><input type="checkbox"> Organização do Estado</li>
-      <li><input type="checkbox"> Poderes da República</li>
-      <li><input type="checkbox"> Controle de constitucionalidade</li>
+    <ul class="lista" id="prf">
+      <li><input type="checkbox"> Física aplicada</li>
+      <li><input type="checkbox"> Raciocínio Lógico</li>
+      <li><input type="checkbox"> Legislação de Trânsito (CTB)</li>
+      <li><input type="checkbox"> Ética e Cidadania</li>
+      <li><input type="checkbox">Língua Estrangeira: Espanhol</li>
     </ul>
-    <button class="ia-btn" onclick="gerarResumo('constitu')">Gerar Resumo IA</button>
-    <p><a href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-constitucional" target="_blank">Resolver Questões</a></p>
+    <button class="ia-btn" onclick="gerarResumo('prf')">Gerar Resumo IA</button>
+    <p><a href="https://www.qconcursos.com" target="_blank">Resolver Questões</a></p>
   </div>
 
-  <button class="accordion">Di
+  <!-- Específico PC-AP -->
+  <button class="accordion">Específico PC-AP</button>
+  <div class="panel">
+    <ul class="lista" id="pcap">
+      <li><input type="checkbox"> História do Amapá</li>
+      <li><input type="checkbox"> Geografia do Amapá</li>
+      <li><input type="checkbox"> Atualidades</li>
+      <li><input type="checkbox"> Leis do Estado do Amapá</li>
+    </ul>
+    <button class="ia-btn" onclick="gerarResumo('pcap')">Gerar Resumo IA</button>
+    <p><a href="https://www.qconcursos.com" target="_blank">Resolver Questões</a></p>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+// Menu lateral
+const menu=document.getElementById('menu');
+document.querySelector('.menu-toggle').addEventListener('click',()=>{menu.style.left='0';});
+document.querySelector('.close-btn').addEventListener('click',()=>{menu.style.left='-350px';});
+
+// Menu funções
+function abrirAssuntos(){alert("Abrir assuntos detalhados.");}
+function abrirMetas(){alert("Abrir metas diárias detalhadas.");}
+function abrirIA(){alert("Abrir agendamento inteligente e resumos de aula.");}
+function abrirDesempenho(){alert("Abrir desempenho geral com gráficos.");}
+
+// Accordion
+const acc=document.getElementsByClassName("accordion");
+for(let i=0;i<acc.length;i++){
+  acc[i].addEventListener("click",function(){
+    this.classList.toggle("active");
+    const panel=this.nextElementSibling;
+    if(panel.style.display==="block"){panel.style.display="none";}
+    else{panel.style.display="block";}
+  });
+}
+
+// Checkbox e barras
+const checkboxes=document.querySelectorAll('input[type="checkbox"]');
+checkboxes.forEach((cb,index)=>{
+  const saved=localStorage.getItem('check_'+index);
+  if(saved==='true') cb.checked=true;
+  cb.addEventListener('change',()=>{
+    localStorage.setItem('check_'+index,cb.checked);
+    atualizarBarras();
+  });
+});
+
+function atualizarBarras(){
+  const blocos=[
+    {id:"baseComum", barra:"barraPort", value:0},
+    {id:"prf", barra:"barraConstitu", value:0},
+    {id:"pcap", barra:"barraPenal", value:0},
+  ];
+  let totalFeitos=0, totalCheck=0;
+  blocos.forEach(bloco=>{
+    const lista=document.getElementById(bloco.id);
+    const items=lista.querySelectorAll('input[type="checkbox"]');
+    let feitos=0;
+    items.forEach(cb=>{if(cb.checked) feitos++;});
+    totalCheck+=items.length;
+    totalFeitos+=feitos;
+  });
+  const geralPercent=(totalFeitos/totalCheck*100).toFixed(1);
+  document.getElementById("barraGeral").style.width=geralPercent+'%';
+  document.getElementById("percentGeral").innerText=geralPercent+'%';
+}
+
+// Mock IA
+function gerarResumo(assunto){
+  alert("Resumo IA gerado para: "+assunto+"\n(Exemplo de IA, integração futura com GPT/API)");
+}
+
+// Atualiza progresso inicial
+atualizarBarras();
+</script>
+
+</body>
+</html>
