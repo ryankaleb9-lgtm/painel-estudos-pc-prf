@@ -2,278 +2,177 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Painel de Estudos — PRF / PC-AP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel de Estudos</title>
+
 <style>
-/* Reset básico */
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Arial',sans-serif;background:#f5f5f5;color:#111;min-height:100vh;}
-
-/* Barra superior pequena */
-header{
-  background:#ccc;color:#111;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
 }
-header .menu-toggle{cursor:pointer;width:25px;height:18px;display:flex;flex-direction:column;justify-content:space-between;}
-header .menu-toggle span{display:block;height:3px;background:#888;border-radius:2px;}
-header nav a{margin-left:15px;text-decoration:none;font-weight:bold;color:#111;cursor:pointer;}
-header nav a:hover{color:#0d47a1;}
 
-/* Menu lateral */
-#menu{
-  position:fixed;top:0;left:-300px;width:300px;height:100%;background:#333;color:#fff;padding:25px 20px;overflow-y:auto;transition:0.3s;z-index:1000;
+header {
+    background: #ffffff;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-around;
+    font-weight: bold;
 }
-#menu h2{color:#0d47a1;margin-bottom:15px;}
-#menu .close-btn{cursor:pointer;font-size:22px;margin-bottom:20px;display:block;}
-#menu ul{list-style:none;padding:0;}
-#menu ul li{padding:10px 0;border-bottom:1px solid #555;cursor:pointer;font-weight:bold;}
-#menu ul li:hover{color:#0d47a1;}
 
-/* Container principal */
-.container{max-width:1200px;margin:20px auto;padding:0 20px;}
-
-/* Barras de abas */
-.abas{display:flex;justify-content:flex-start;margin-bottom:20px;}
-.aba-btn{padding:10px 15px;margin-right:5px;border:none;border-radius:6px;background:#eee;cursor:pointer;font-weight:bold;transition:0.3s;}
-.aba-btn.active{background:#0d47a1;color:#fff;}
-.aba-btn:hover{background:#0b3c91;color:#fff;}
-
-/* Blocos */
-.bloco{
-  background:#fff;border-radius:12px;padding:25px;margin-bottom:30px;box-shadow:0 10px 25px rgba(0,0,0,0.08);
+header div {
+    cursor: pointer;
 }
-.bloco h2{color:#0d47a1;margin-bottom:15px;}
 
-/* Listas e checkboxes */
-.lista{list-style:none;padding-left:0;margin-bottom:10px;}
-.lista li{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid #eee;font-size:16px;justify-content:space-between;}
-.lista li:last-child{border-bottom:none;}
-input[type="checkbox"]{width:20px;height:20px;margin-right:10px;cursor:pointer;accent-color:#0d47a1;}
+.container {
+    padding: 15px;
+}
 
-/* Barras de progresso */
-.barra-container{margin-top:10px;}
-.barra{background:#eee;border-radius:12px;height:16px;overflow:hidden;margin-top:5px;}
-.fill{height:16px;background:#0d47a1;border-radius:12px;width:0%;transition:0.5s;}
-.percentual{display:flex;justify-content:space-between;font-weight:bold;margin-top:10px;font-size:16px;}
+.card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
 
-/* Accordion */
-.accordion{background:#f4f6f8;cursor:pointer;padding:12px;border:none;outline:none;transition:0.3s;margin-top:8px;border-radius:6px;font-weight:bold;}
-.accordion:hover{background:#e0e4e8;}
-.panel{padding:0 12px;display:none;background:#fff;overflow:hidden;margin-bottom:8px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.title {
+    font-size: 18px;
+    font-weight: bold;
+}
 
-/* Botões IA */
-.ia-btn{display:inline-block;margin-left:5px;padding:5px 8px;background:#0d47a1;color:#fff;border:none;border-radius:6px;cursor:pointer;transition:0.3s;font-size:13px;}
-.ia-btn:hover{background:#0a2540;}
+.sub {
+    color: #666;
+    font-size: 14px;
+}
 
-/* Aba conteúdo */
-.aba{display:none;}
-.aba.active{display:block;}
+.progress {
+    margin-top: 10px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 82%;
+    background: #4CAF50;
+    padding: 5px;
+    color: #fff;
+    text-align: right;
+    font-size: 12px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tag {
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.button {
+    background: #1976d2;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.checks span {
+    margin-right: 8px;
+    background: #f1f1f1;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <div class="menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  <nav>
-    <a onclick="abrirAba('hoje')">Hoje</a>
-    <a onclick="abrirAba('assuntos')">Assuntos</a>
-    <a onclick="abrirAba('revisao')">Revisão</a>
-    <a onclick="abrirAba('questoes')">Questões</a>
-  </nav>
+    <div>HOJE</div>
+    <div>ASSUNTOS</div>
+    <div>REVISÕES</div>
+    <div>QUESTÕES</div>
 </header>
 
-<!-- Menu lateral -->
-<div id="menu">
-  <span class="close-btn">&times; Fechar</span>
-  <h2>Menu</h2>
-  <ul>
-    <li onclick="abrirAba('hoje')">Dashboard Hoje</li>
-    <li onclick="abrirAba('assuntos')">Assuntos Detalhados</li>
-    <li onclick="abrirAba('revisao')">Revisão</li>
-    <li onclick="abrirAba('questoes')">Questões</li>
-    <li onclick="abrirIA()">IA — Resumos/Mapas/Questões</li>
-  </ul>
+<div class="container">
+
+    <div class="card">
+        <div class="row">
+            <div>
+                <div class="title">Painel de Estudos</div>
+                <div class="sub">PRF / PC-AP • 3 horas por dia</div>
+            </div>
+            <div style="font-weight:bold;">82,7%</div>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar">82,7%</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">📘 Aula / PDF</div>
+        <div class="row">
+            <div>
+                <div><strong>Direito Penal</strong></div>
+                <div class="sub">Crimes contra a Administração Pública</div>
+            </div>
+            <div class="button">Aula / PDF</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">🔁 Revisões</div>
+
+        <div class="row">
+            <div>
+                <strong>Direito Administrativo</strong>
+                <div class="sub">Licitações e Contratos</div>
+            </div>
+            <div class="checks">
+                <span>1d</span>
+                <span>10d</span>
+                <span>15d</span>
+                <span>30d</span>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div>
+                <strong>Português</strong>
+                <div class="sub">Regência e Crase</div>
+            </div>
+            <div class="button">Revisar</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">📝 Questões</div>
+        <div>
+            <strong>Direito Penal</strong>
+            <div class="sub">Peculato • 12/15 questões • Melhorou!</div>
+        </div>
+    </div>
+
 </div>
-
-<main class="container">
-
-  <!-- ABA Hoje -->
-  <div class="aba active" id="hoje">
-    <div class="bloco">
-      <h2>Hoje — Painel de Estudos</h2>
-      <p>Meta diária: 3 horas</p>
-      <div class="percentual">
-        <span>Progresso hoje:</span>
-        <span id="percentHoje">0%</span>
-      </div>
-      <div class="barra-container">
-        <div class="barra"><div class="fill" id="barraHoje"></div></div>
-      </div>
-      <ul class="lista" id="metaDiaHoje">
-        <!-- JS preenche automaticamente -->
-      </ul>
-    </div>
-  </div>
-
-  <!-- ABA Assuntos -->
-  <div class="aba" id="assuntos">
-    <div class="bloco">
-      <h2>📑 Assuntos Detalhados PRF e PC-AP</h2>
-
-      <!-- Accordion -->
-      <button class="accordion">Língua Portuguesa</button>
-      <div class="panel">
-        <ul class="lista" id="portugues">
-          <li>Ortografia <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Ortografia')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Ortografia')">Mapa</button></li>
-          <li>Sintaxe <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Sintaxe')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Sintaxe')">Mapa</button></li>
-          <li>Concordância <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Concordância')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Concordância')">Mapa</button></li>
-          <li>Pontuação <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Pontuação')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Pontuação')">Mapa</button></li>
-          <li>Interpretação de textos <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Interpretação de textos')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Interpretação de textos')">Mapa</button></li>
-          <li>Figuras de linguagem <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Figuras de linguagem')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Figuras de linguagem')">Mapa</button></li>
-          <li>Semântica <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Semântica')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Semântica')">Mapa</button></li>
-          <li>Coesão e coerência <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Coesão e coerência')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Coesão e coerência')">Mapa</button></li>
-          <li>Redação oficial <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Redação oficial')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Redação oficial')">Mapa</button></li>
-        </ul>
-      </div>
-
-      <!-- Accordion Direito Constitucional -->
-      <button class="accordion">Direito Constitucional</button>
-      <div class="panel">
-        <ul class="lista" id="dirConst">
-          <li>Princípios fundamentais <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Princípios fundamentais')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Princípios fundamentais')">Mapa</button></li>
-          <li>Direitos e garantias <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Direitos e garantias')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Direitos e garantias')">Mapa</button></li>
-          <li>Organização do Estado <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Organização do Estado')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Organização do Estado')">Mapa</button></li>
-          <li>Poderes da União <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Poderes da União')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Poderes da União')">Mapa</button></li>
-          <li>Controle de constitucionalidade <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Controle de constitucionalidade')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Controle de constitucionalidade')">Mapa</button></li>
-        </ul>
-      </div>
-
-      <!-- Accordion Direito Administrativo -->
-      <button class="accordion">Direito Administrativo</button>
-      <div class="panel">
-        <ul class="lista" id="dirAdm">
-          <li>Administração Pública <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Administração Pública')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Administração Pública')">Mapa</button></li>
-          <li>Licitações e contratos <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Licitações e contratos')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Licitações e contratos')">Mapa</button></li>
-          <li>Servidores públicos <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Servidores públicos')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Servidores públicos')">Mapa</button></li>
-          <li>Atos administrativos <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Atos administrativos')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Atos administrativos')">Mapa</button></li>
-          <li>Responsabilidade civil do Estado <input type="checkbox"> <button class="ia-btn" onclick="gerarResumo('Responsabilidade civil do Estado')">Resumo</button> <button class="ia-btn" onclick="gerarMapa('Responsabilidade civil do Estado')">Mapa</button></li>
-        </ul>
-      </div>
-
-      <!-- Você repetiria este padrão para todas as disciplinas PRF e PC-AP -->
-      <!-- Incluindo Direito Penal, Processual Penal, Física, Raciocínio, Informática, Atualidades, História e Geografia do Amapá, Legislação Estadual, Língua Estrangeira -->
-    </div>
-  </div>
-
-  <!-- ABA Revisão -->
-  <div class="aba" id="revisao">
-    <div class="bloco">
-      <h2>🔄 Revisão Programada</h2>
-      <p>Revisões programadas entre 10, 15 e 30 dias</p>
-      <ul class="lista" id="revisoes">
-        <!-- JS preenche automaticamente -->
-      </ul>
-    </div>
-  </div>
-
-  <!-- ABA Questões -->
-  <div class="aba" id="questoes">
-    <div class="bloco">
-      <h2>📌 Questões por Assunto (PRF & PC-AP)</h2>
-      <ul class="lista" id="questoesLista">
-        <!-- JS preenche automaticamente com placeholders -->
-      </ul>
-    </div>
-  </div>
-
-</main>
-
-<script>
-// Menu lateral toggle
-const menu=document.getElementById('menu');
-document.querySelector('.menu-toggle').addEventListener('click',()=>{menu.style.left='0';});
-document.querySelector('.close-btn').addEventListener('click',()=>{menu.style.left='-300px';});
-
-// Barras de abas
-function abrirAba(id){
-  document.querySelectorAll('.aba').forEach(a=>a.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.aba-btn').forEach(b=>b.classList.remove('active'));
-  if(event.target) event.target.classList.add('active');
-}
-
-// Accordion
-const acc=document.getElementsByClassName("accordion");
-for(let i=0;i<acc.length;i++){
-  acc[i].addEventListener("click",function(){
-    this.classList.toggle("active");
-    const panel=this.nextElementSibling;
-    panel.style.display=(panel.style.display==="block")?"none":"block";
-  });
-}
-
-// IA mock
-function gerarResumo(assunto){alert("Resumo gerado para: "+assunto);}
-function gerarMapa(assunto){alert("Mapa mental gerado para: "+assunto);}
-function abrirIA(){alert("IA — futuramente: resumos, mapas mentais, questões");}
-
-// Meta do dia
-const materias=["Língua Portuguesa","Raciocínio Lógico","Informática","Direito Constitucional","Direito Administrativo","Direito Penal","Direito Processual Penal","Legislação Especial","Física","Língua Estrangeira","Atualidades","História do Amapá","Geografia do Amapá","PC-AP específicos"];
-const metaHoje=document.getElementById('metaDiaHoje');
-materias.forEach(m=>{
-  let li=document.createElement('li');
-  li.innerHTML=`${m}: 30min estudo / 1h questão / 1h revisão <input type="checkbox">`;
-  metaHoje.appendChild(li);
-});
-
-// Revisões
-const revisoesDiv=document.getElementById('revisoes');
-materias.forEach(m=>{
-  let li=document.createElement('li');
-  li.innerHTML=`Revisão de ${m} — 10 / 15 / 30 dias <input type="checkbox">`;
-  revisoesDiv.appendChild(li);
-});
-
-// Questões placeholders
-const questoesDiv=document.getElementById('questoesLista');
-materias.forEach(m=>{
-  let li=document.createElement('li');
-  li.innerHTML=`${m} — <a href="#" target="_blank">Abrir questões FCC</a> | <a href="#" target="_blank">Abrir questões CESP</a>`;
-  questoesDiv.appendChild(li);
-});
-
-// Atualiza progresso
-function atualizarBarras(){
-  const blocos=["portugues","dirConst","dirAdm"];
-  let totalFeitos=0,totalCheck=0;
-  blocos.forEach(id=>{
-    const lista=document.getElementById(id);
-    if(lista){
-      const items=lista.querySelectorAll('input[type="checkbox"]');
-      items.forEach(cb=>{if(cb.checked) totalFeitos++;});
-      totalCheck+=items.length;
-    }
-  });
-  const geralPercent=(totalFeitos/totalCheck*100).toFixed(1);
-  document.getElementById("barraHoje").style.width=geralPercent+'%';
-  document.getElementById("percentHoje").innerText=geralPercent+'%';
-}
-
-// Salvar progresso localStorage
-document.querySelectorAll('input[type="checkbox"]').forEach((cb,index)=>{
-  const saved=localStorage.getItem('check_'+index);
-  if(saved==='true') cb.checked=true;
-  cb.addEventListener('change',()=>{
-    localStorage.setItem('check_'+index,cb.checked);
-    atualizarBarras();
-  });
-});
-
-// Inicializa progresso
-atualizarBarras();
-</script>
 
 </body>
 </html>
